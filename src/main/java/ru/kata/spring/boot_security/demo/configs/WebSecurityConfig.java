@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,16 +26,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-//                .antMatchers("/", "/index").permitAll()
                 .antMatchers("/auth/login", "error").permitAll()
                 .anyRequest().hasAnyRole("USER", "ADMIN")
-//                .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/auth/login").loginProcessingUrl("/process_login")
                 .successHandler(successUserHandler)
-//                .defaultSuccessUrl("/", true)
                 .failureUrl("/auth/login?error")
-//                .permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/auth/login")
                 .permitAll();
@@ -72,12 +67,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder.userDetailsService(userService)
                 .passwordEncoder(getPasswordEncoder());
     }
-
-//    @Bean
-//    public DaoAuthenticationProvider daoAuthenticationProvider() {
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setPasswordEncoder(getPasswordEncoder());
-//        authenticationProvider.setUserDetailsService(userService);
-//        return authenticationProvider;
-//    }
 }
