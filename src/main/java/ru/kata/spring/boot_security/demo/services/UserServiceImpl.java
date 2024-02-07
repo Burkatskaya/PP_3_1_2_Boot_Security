@@ -1,12 +1,10 @@
 package ru.kata.spring.boot_security.demo.services;
 
 import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +20,9 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-//        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -49,7 +45,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void create(User user) {
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -76,8 +71,6 @@ public class UserServiceImpl implements UserService {
         if (user == null)  {
             throw new UsernameNotFoundException(String.format("User %s not found!", username));
         }
-
-//        return new ru.kata.spring.boot_security.demo.security.UserDetails(user);
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
