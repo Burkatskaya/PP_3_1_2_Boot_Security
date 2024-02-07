@@ -14,11 +14,6 @@
 <p th:text="${'Username: ' + user.getUsername()}">username</p>
 <p th:text="${'Lastname: ' + user.getLastname()}">lastname</p>
 <br/>
-<!--<td>-->
-<!--    <a th:href="'edit?id='+${user.id}">Edit</a>-->
-<!--    <a th:href="'delete?id='+${user.id}">Delete</a>-->
-<!--</td>-->
-
 <form method="POST" th:action="@{/logout}">
     <input type="submit" value="Logout"/>
 </form>

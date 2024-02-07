@@ -16,6 +16,7 @@
         <th scope="col">Id</th>
         <th scope="col">Username</th>
         <th scope="col">Lastname</th>
+        <th scope="col">Role</th>
         <th scope="col">Action</th>
     </tr>
     </thead>
@@ -24,6 +25,7 @@
         <td th:text="${user.id}"/>
         <td th:text="${user.username}"/>
         <td th:text="${user.lastname}"/>
+        <td th:each="role : ${user.getRoles()}" th:text="${role.getAuthority}"/>
         <td>
             <a th:href="'admin/edit?id='+${user.id}">Edit</a>
             <a th:href="'admin/delete?id='+${user.id}">Delete</a>
