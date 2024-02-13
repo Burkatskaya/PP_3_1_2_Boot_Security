@@ -28,8 +28,8 @@ public class User implements UserDetails {
     private int id;
     @Column(name = "Email", nullable = false)
     private String email;
-    @Column(name = "Lastname", nullable = false)
-    private String lastname;
+    @Column(name = "Name", nullable = false)
+    private String name;
 
     @Column(name = "Password", nullable = false)
     private String password;
@@ -44,9 +44,9 @@ public class User implements UserDetails {
 
     }
 
-    public User(String email, String lastname, String password, Set<Role> roles) {
+    public User(String email, String name, String password, Set<Role> roles) {
         this.email = email;
-        this.lastname = lastname;
+        this.name = name;
         this.password = password;
         this.roles = roles;
     }
@@ -76,12 +76,12 @@ public class User implements UserDetails {
         this.email = username;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getName() {
+        return name;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -111,13 +111,13 @@ public class User implements UserDetails {
         }
         User user = (User) o;
         return id == user.id && Objects.equals(email, user.email)
-                && Objects.equals(lastname, user.lastname)
+                && Objects.equals(name, user.name)
                 && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, lastname, password);
+        return Objects.hash(id, email, name, password);
     }
 
     @Override

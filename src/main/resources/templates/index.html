@@ -15,19 +15,22 @@
     <tr>
         <th scope="col">Id</th>
         <th scope="col">Email</th>
-        <th scope="col">Lastname</th>
+        <th scope="col">Name</th>
         <th scope="col">Role</th>
-        <th scope="col">Action</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each ="user : ${users}">
         <td th:text="${user.id}"/>
         <td th:text="${user.email}"/>
-        <td th:text="${user.lastname}"/>
+        <td th:text="${user.name}"/>
         <td th:each="role : ${user.getRoles()}" th:text="${role.getAuthority}"/>
         <td>
             <a th:href="'admin/edit?id='+${user.id}">Edit</a>
+                    </td>
+        <td>
             <a th:href="'admin/delete?id='+${user.id}">Delete</a>
         </td>
     </tr>
