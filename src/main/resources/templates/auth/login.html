@@ -8,8 +8,8 @@
 <body>
 
 <form name="f" method="POST" action="/process_login">
-    <label for="username">Enter username: </label>
-    <input type="text" name="username" id="username"/>
+    <label for="email">Enter email: </label>
+    <input type="email" name="username" id="email"/>
     <br/>
     <label for="password">Enter password: </label>
     <input type="password" name="password" id="password"/>
@@ -18,7 +18,7 @@
     <input type="submit" value="Sigh in"/>
 
     <div th:if="${param.error}" style="color: red">
-        Incorrect username or password
+        Incorrect email or password
     </div>
 </form>
 

@@ -14,7 +14,7 @@
     <thead>
     <tr>
         <th scope="col">Id</th>
-        <th scope="col">Username</th>
+        <th scope="col">Email</th>
         <th scope="col">Lastname</th>
         <th scope="col">Role</th>
         <th scope="col">Action</th>
@@ -23,7 +23,7 @@
     <tbody>
     <tr th:each ="user : ${users}">
         <td th:text="${user.id}"/>
-        <td th:text="${user.username}"/>
+        <td th:text="${user.email}"/>
         <td th:text="${user.lastname}"/>
         <td th:each="role : ${user.getRoles()}" th:text="${role.getAuthority}"/>
         <td>

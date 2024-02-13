@@ -30,9 +30,9 @@ public class LoadUser {
         roleRepository.save(user);
         roleRepository.save(admin);
 
-        User userUser = new User("user", "lastname1",
+        User userUser = new User("user@mail.ru", "lastname1",
                 passwordEncoder.encode("user"), Set.of(user));
-        User adminUser = new User("admin", "lastname2",
+        User adminUser = new User("admin@mail.ru", "lastname2",
                 passwordEncoder.encode("admin"), Set.of(admin));
 
         userRepository.save(userUser);

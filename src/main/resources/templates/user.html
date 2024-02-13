@@ -8,10 +8,10 @@
     <title>Information about User</title>
 </head>
 <body>
-<h1 th:text="${user.getUsername() + ', welcome to your profile!'}"/>
+<h1 th:text="${user.getEmail() + ', welcome to your profile!'}"/>
 <br/>
 <p th:text="${'ID: ' + user.getId()}">id</p>
-<p th:text="${'Username: ' + user.getUsername()}">username</p>
+<p th:text="${'Email: ' + user.getEmail()}">email</p>
 <p th:text="${'Lastname: ' + user.getLastname()}">lastname</p>
 <br/>
 <form method="POST" th:action="@{/logout}">

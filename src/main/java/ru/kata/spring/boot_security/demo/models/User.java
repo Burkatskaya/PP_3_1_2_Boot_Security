@@ -26,8 +26,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private int id;
-    @Column(name = "Username", nullable = false)
-    private String username;
+    @Column(name = "Email", nullable = false)
+    private String email;
     @Column(name = "Lastname", nullable = false)
     private String lastname;
 
@@ -44,8 +44,8 @@ public class User implements UserDetails {
 
     }
 
-    public User(String username, String lastname, String password, Set<Role> roles) {
-        this.username = username;
+    public User(String email, String lastname, String password, Set<Role> roles) {
+        this.email = email;
         this.lastname = lastname;
         this.password = password;
         this.roles = roles;
@@ -59,13 +59,21 @@ public class User implements UserDetails {
         this.id = id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.email = username;
     }
 
     public String getLastname() {
@@ -102,14 +110,14 @@ public class User implements UserDetails {
             return false;
         }
         User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username)
+        return id == user.id && Objects.equals(email, user.email)
                 && Objects.equals(lastname, user.lastname)
                 && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, lastname, password);
+        return Objects.hash(id, email, lastname, password);
     }
 
     @Override
