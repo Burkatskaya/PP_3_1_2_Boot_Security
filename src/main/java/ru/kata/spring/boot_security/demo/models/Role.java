@@ -78,4 +78,12 @@ public class Role implements GrantedAuthority {
     public int hashCode() {
         return Objects.hash(id, authority);
     }
+
+    @Override
+    public String toString() {
+        if (authority.equals("ROLE_ADMIN")) {
+            return "ADMIN";
+        }
+        return "USER";
+    }
 }
