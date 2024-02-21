@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -20,14 +22,10 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String showUsers(Model model) {
+    public String showUsers(Model model, Principal principal) {
+        model.addAttribute("user", userService.findByEmail(principal.getName()));
         model.addAttribute("users", userService.listUsers());
         return "index";
-    }
-
-    @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user) {
-        return "admin/new";
     }
 
     @PostMapping()
@@ -39,7 +37,7 @@ public class AdminController {
     @GetMapping("/edit")
     public String edit(Model model, @RequestParam("id") int id) {
         model.addAttribute("user", userService.show(id));
-        return "admin/edit";
+        return "redirect:/admin";
     }
 
     @PostMapping("/edit")
