@@ -5,21 +5,19 @@ import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.annotation.PostConstruct;
 import java.util.Set;
 
 @Component
 public class LoadUser {
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public LoadUser(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
+    public LoadUser(UserService userService, RoleRepository roleRepository) {
+        this.userService = userService;
         this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -30,12 +28,10 @@ public class LoadUser {
         roleRepository.save(user);
         roleRepository.save(admin);
 
-        User userUser = new User("user@mail.ru", "user",
-                passwordEncoder.encode("user"), Set.of(user));
-        User adminUser = new User("admin@mail.ru", "admin",
-                passwordEncoder.encode("admin"), Set.of(admin));
+        User userUser = new User("user@mail.ru", "user", "user", Set.of(user));
+        User adminUser = new User("admin@mail.ru", "admin", "admin", Set.of(admin));
 
-        userRepository.save(userUser);
-        userRepository.save(adminUser);
+        userService.create(userUser);
+        userService.create(adminUser);
     }
 }
