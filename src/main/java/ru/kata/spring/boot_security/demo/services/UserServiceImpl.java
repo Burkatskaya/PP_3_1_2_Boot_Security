@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.services;
 
 import org.hibernate.Hibernate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +15,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -39,13 +42,21 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void create(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public void update(User updateUser) {
-        userRepository.save(updateUser);
+    public void update(User updateUser, int id) {
+        User user = userRepository.getById(id);
+
+        if (user.getPassword().equals(updateUser.getPassword())) {
+            userRepository.save(updateUser);
+        } else {
+            updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+            userRepository.save(updateUser);
+        }
     }
 
     @Override
