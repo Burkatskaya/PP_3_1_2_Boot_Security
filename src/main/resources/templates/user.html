@@ -21,14 +21,16 @@
 <body>
 <nav class="navbar bg-dark" data-bs-theme="dark" role="navigation">
     <div class="container-fluid">
-        <a class="navbar-brand">
-            <strong class="navbar-text fs-5" style="color: white" th:text="${user.getEmail()}">VALUE</strong>
-            <span class="navbar-text fs-5" style="color: white" th:text="'with roles:'"/>
-            <span class="navbar-text fs-5" style="color: white">
-                <th:block th:each="role : ${user.getRoles()}"
-                          th:text="${role.toString()}">
-                </th:block>
-            </span>
+        <a class="navbar-brand" id="navbar-brand-user">
+            <!--script-->
+
+<!--            <strong class="navbar-text fs-5" style="color: white" th:text="${user.getEmail()}">VALUE</strong>-->
+<!--            <span class="navbar-text fs-5" style="color: white" th:text="'with roles:'"/>-->
+<!--            <span class="navbar-text fs-5" style="color: white">-->
+<!--                <th:block th:each="role : ${user.getRoles()}"-->
+<!--                          th:text="${role.toString()}">-->
+<!--                </th:block>-->
+<!--            </span>-->
         </a>
         <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
             <li class="nav-item">
@@ -41,7 +43,10 @@
     <div class="row">
         <nav class="nav flex-column nav-pills" aria-orientation="vertical" style="width: 250px;">
             </p>
-                <a class="nav-link active" aria-current="page" href="/user">User</a>
+            <div id="admin">
+                <a class="nav-link" href="/admin">Admin</a>
+            </div>
+            <a class="nav-link active" aria-current="page" href="/user">User</a>
         </nav>
         <div class="col pt-3 h-100 min-vh-100 bg-light">
             <div class="container-fluid">
@@ -59,15 +64,17 @@
                             <th scope="col">Role</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td th:text="${user.getId()}"/>
-                            <td th:text="${user.getEmail()}"/>
-                            <td th:text="${user.getName()}"/>
-                            <td th:each="role : ${user.getRoles()}"
-                                th:text="${role.toString()}"/>
-                            <td>
-                        </tr>
+                        <tbody id="table-user">
+                            <!--script-->
+
+<!--                        <tr>-->
+<!--                            <td th:text="${user.getId()}"/>-->
+<!--                            <td th:text="${user.getEmail()}"/>-->
+<!--                            <td th:text="${user.getName()}"/>-->
+<!--                            <td th:each="role : ${user.getRoles()}"-->
+<!--                                th:text="${role.toString()}"/>-->
+<!--                            <td>-->
+<!--                        </tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -85,6 +92,8 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous">
 </script>
+
+<script th:src="@{/user.js}"></script>
 
 
 </body>
