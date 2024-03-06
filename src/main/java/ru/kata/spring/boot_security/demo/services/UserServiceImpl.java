@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.services;
 
-import org.hibernate.Hibernate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,8 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User show(int id) {
-        User user = userRepository.getById(id);
-        Hibernate.initialize(user.getRoles());
+        User user = userRepository.findById(id).get();
         return user;
     }
 
