@@ -28,8 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/auth/login", "error", "/api/**").permitAll()
+                .antMatchers("/api/admin/**", "/admin/**").hasRole("ADMIN")
+                .antMatchers("/auth/login", "error").permitAll()
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and()
                 .formLogin().loginPage("/auth/login").loginProcessingUrl("/process_login")
