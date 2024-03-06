@@ -3,18 +3,16 @@ const userUrl = '/api/user'
 const navbarBrandAdmin = document.getElementById('navbar-brand-admin')
 const tableUsers = document.getElementById('table-users')
 
-// let formEdit = document.forms['formEdit'];
 const urlEdit = '/api/admin/edit'
-
-// const edit = document.getElementById('edit')
-const closeEdit = document.getElementById('close-edit')
-// const editModal = new bootstrap.Modal(edit)
 const editForm = document.getElementById('edit-form')
-// const editId = document.getElementById('edit-id')
-// const editEmail = document.getElementById('edit-email')
-// const editName = document.getElementById('edit-name')
-// const editPassword = document.getElementById('edit-password')
-let roleEdit = document.getElementById('edit-roles')
+const closeEdit = document.getElementById('close-edit')
+
+const urlDelete = '/api/admin/delete'
+const deleteForm = document.getElementById('delete-form')
+const closeDelete = document.getElementById('close-delete')
+
+const newUserForm = document.getElementById('new-user-form')
+const tableUsersAdmin = document.getElementById('users-table-tab')
 
 async function getAuthUser() {
     try {
@@ -55,7 +53,7 @@ function getUsersInfo(users) {
                     </td>
                     <td>
                         <button type='button' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#deleteModal'
-                        onclick='dataDelete(${user.id})'>Delete</button>
+                        onclick='getDeleteModal(${user.id})'>Delete</button>
                     </td>
                 </tr>`
     }
@@ -64,8 +62,9 @@ function getUsersInfo(users) {
 
 getAdminPage()
 
+// Edit
+
 function getEditModal(id) {
-    console.log(id)
     fetch(urlEdit + '?id=' + id).then(response => {
         response.json().then(user => {
             document.getElementById('edit-id').value = user.id
@@ -83,11 +82,12 @@ editForm.addEventListener('submit', user => {
     let name = document.getElementById('edit-name').value
     let email = document.getElementById('edit-email').value
     let password = document.getElementById('edit-password').value
-    let roles = []
-    for (let i = 0; i < roleEdit.length; i++) {
-        roles.push({
-            id: roleEdit[i].value
-        })
+    let roles = [];
+    for (let i = 0; i < editForm.roles.options.length; i++) {
+        if (editForm.roles.options[i].selected) roles.push({
+            id: editForm.roles.options[i].value,
+            role: "ROLE_" + editForm.roles.options[i].text
+        });
     }
     let editUser = {
         id: id,
@@ -104,5 +104,63 @@ editForm.addEventListener('submit', user => {
     fetch(urlEdit + '?id=' + editUser.id, method).then(() => {
         closeEdit.click()
         getAdminPage()
+    })
+})
+
+// Delete
+
+function getDeleteModal(id) {
+    fetch(urlEdit + '?id=' + id).then(response => {
+        response.json().then(user => {
+            document.getElementById('delete-id').value = user.id
+            document.getElementById('delete-name').value = user.name
+            document.getElementById('delete-email').value = user.email
+            document.getElementById('delete-password').value = user.password
+            document.getElementById('delete-roles').selectedIndex = user.roles
+            })
+        }).catch(error => console.error('An error occurred while retrieving information to delete user', error))
+}
+
+deleteForm.addEventListener('submit', user => {
+    user.preventDefault()
+    let method = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+    }
+    fetch(urlDelete + '?id=' + deleteForm.id.value, method).then(() => {
+        closeDelete.click()
+        getAdminPage()
+    })
+})
+
+// New user
+
+newUserForm.addEventListener('submit', user => {
+    user.preventDefault()
+    let name = document.getElementById('create-name').value
+    let email = document.getElementById('create-email').value
+    let password = document.getElementById('create-password').value
+    let roles = [];
+    for (let i = 0; i < newUserForm.roles.options.length; i++) {
+        if (newUserForm.roles.options[i].selected) roles.push({
+            id: newUserForm.roles.options[i].value,
+            role: "ROLE_" + newUserForm.roles.options[i].text
+        });
+    }
+    let newUser = {
+        name: name,
+        email: email,
+        password: password,
+        roles: roles
+    }
+    let method = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(newUser)
+    }
+    fetch(adminUrl, method).then(() => {
+        newUserForm.reset()
+        getAdminPage()
+        tableUsersAdmin.click()
     })
 })
